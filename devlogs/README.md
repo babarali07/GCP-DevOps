@@ -14,3 +14,4 @@
   - download and learn to use the docker extension
   - learn python flask
   - download and learn github copilot
+  - keep building github profile
