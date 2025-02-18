@@ -19,7 +19,7 @@
   - Pushed the Docker container to Docker Hub and Github at the desired folder
   - Learned about .gitignore and how to use it [7]
   
-### Next Steps
+## Next Steps
   - Create dev enviorment on laptop
   - Download and learn to use the docker extension
   - Learn python flask
@@ -28,11 +28,10 @@
   - Learn to use command line for Git and Docker
   - Format Devlogs
 
-### Links
-[1] Getting started with Visual Studio Code
-https://code.visualstudio.com/docs/introvideos/basics
+## Links
+[1] [Getting started with Visual Studio Code](https://code.visualstudio.com/docs/introvideos/basics)
 
-[2] Getting Started with Python in VS Code
+[2] [Getting Started with Python in VS Code]
 https://www.youtube.com/watch?v=D2cwvpJSBX4
 
 [3] Using Git & GitHub in VSCode: Stage, Commit, and Push
