@@ -29,30 +29,25 @@
   - Format Devlogs
 
 ## Links
-[1] [Getting started with Visual Studio Code](https://code.visualstudio.com/docs/introvideos/basics)
+[1] 
+[Getting started with Visual Studio Code](https://code.visualstudio.com/docs/introvideos/basics)
 
-[2] [Getting Started with Python in VS Code]
-https://www.youtube.com/watch?v=D2cwvpJSBX4
+[2] 
+[Getting Started with Python in VS Code](https://www.youtube.com/watch?v=D2cwvpJSBX4)
 
-[3] Using Git & GitHub in VSCode: Stage, Commit, and Push
-https://www.youtube.com/watch?v=z5jZ9lrSpqk
+[3] 
+[Using Git & GitHub in VSCode: Stage, Commit, and Push](https://www.youtube.com/watch?v=z5jZ9lrSpqk)
+[Using Git & GitHub in VSCode: Branches, Pull Requests & Merges](https://www.youtube.com/watch?v=Dedz4gRHezg)
 
-Using Git & GitHub in VSCode: Branches, Pull Requests & Merges
-https://www.youtube.com/watch?v=Dedz4gRHezg
+[4] 
+[Tutorial: Create a Docker app with Visual Studio Code](https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial?WT.mc_id=vscode_docker_aka_getstartedwithdocker)
+[How to Use Docker Extension in VS Code](https://www.youtube.com/watch?v=KPULDwnRyNU)
 
-[4] Tutorial: Create a Docker app with Visual Studio Code
-https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial?WT.mc_id=vscode_docker_aka_getstartedwithdocker
-
-How to Use Docker Extension in VS Code
-https://www.youtube.com/watch?v=KPULDwnRyNU
-
-[5] Share your image
-https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial-share#share-your-image
+[5] 
+[Share your image](https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial-share#share-your-image)
 
 [6]
-How to Use Docker Extension in VS Code
-https://www.youtube.com/watch?v=KPULDwnRyNU
+[How to Use Docker Extension in VS Code](https://www.youtube.com/watch?v=KPULDwnRyNU)
 
 [7]
-gitignore in Visual Studio Code
-https://www.youtube.com/watch?v=ZmGW45eZOg8
+[gitignore in Visual Studio Code](https://www.youtube.com/watch?v=ZmGW45eZOg8)
