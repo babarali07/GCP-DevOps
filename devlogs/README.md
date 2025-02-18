@@ -9,6 +9,13 @@
   - unable to use the docker extension because my dev enviorment is a VM and I could not run docker on my VM due to WSL not working
   - going setup another enviorment on my laptop on base hardware
 
+# Feb 17, 2025
+  - Setup a dev enviorment on laptop on the base harware 
+  - Able to run docker and install docker engine now
+
+# Feb 18, 2025
+  - Learned the basics of Docker using youtube and this guide [1]
+  
 # Next Steps
   - create dev enviorment on laptop
   - download and learn to use the docker extension
