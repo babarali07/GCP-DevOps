@@ -18,6 +18,9 @@
   - Built a Docker container using (test-files > app.py) and this guide [6]
   - Pushed the Docker container to Docker Hub and Github at the desired folder
   - Learned about .gitignore and how to use it [7]
+
+# Feb 19, 2025
+  - Enabled 2FA for Github and Docker Hub
   
 ## Next Steps
   - Create dev enviorment on laptop
