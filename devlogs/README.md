@@ -30,6 +30,8 @@
   - Keep building github profile
   - Learn to use command line for Git and Docker
   - Format Devlogs
+  - https://blog.devops.dev/deploy-a-docker-image-from-the-docker-hub-in-gke-google-kubernetes-engine-76d9d4d2a5b3
+  - https://zesty.co/blog/moving-from-docker-to-containerd/
 
 ## Links
 [1] 
