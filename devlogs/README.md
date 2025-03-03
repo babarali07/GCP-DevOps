@@ -63,3 +63,4 @@
 [3] The Linux Command Line, 2nd Edition: A Complete Introduction -  ISBN-13: 978-1593279523  
 [4] PowerShell for Sysadmins: Workflow Automation Made Easy -  ISBN-13: 978-1593279189  
 [5] Shell Scripting: How to Automate Command Line Tasks Using Bash Scripting and Shell Programming  
+[6] DevOps for the Desperate: A Hands-On Survival Guide -  ISBN-13:  978-1718502482  
