@@ -56,11 +56,3 @@
 
 [7]
 [gitignore in Visual Studio Code](https://www.youtube.com/watch?v=ZmGW45eZOg8)
-
-## Books
-[1] Python Crash Course, 3rd Edition: A Hands-On, Project-Based Introduction to Programming - ISBN-13: 978-1718502703  
-[2] Automate the Boring Stuff with Python, 2nd Edition: Practical Programming for Total Beginners -  ISBN-13: 978-1593279929  
-[3] The Linux Command Line, 2nd Edition: A Complete Introduction -  ISBN-13: 978-1593279523  
-[4] PowerShell for Sysadmins: Workflow Automation Made Easy -  ISBN-13: 978-1593279189  
-[5] Shell Scripting: How to Automate Command Line Tasks Using Bash Scripting and Shell Programming  
-[6] DevOps for the Desperate: A Hands-On Survival Guide -  ISBN-13:  978-1718502482  
