@@ -21,15 +21,21 @@
 
 # Feb 19, 2025
   - Enabled 2FA for Github and Docker Hub
+
+# March 5th, 2025
+  - Added Fixed todo list code to the github
+  - Updated code is fully tested and working in python
+  - Containerized the todolist application
+  - pushed the docker image to dockerhub and github
+  - deployed the application on GKE
+  - Tested the application on GKE
+
   
 ## Next Steps
-  - Create dev enviorment on laptop
-  - Download and learn to use the docker extension
   - Learn python flask
   - Download and learn github copilot
   - Keep building github profile
   - Learn to use command line for Git and Docker
-  - Format Devlogs
   - https://blog.devops.dev/deploy-a-docker-image-from-the-docker-hub-in-gke-google-kubernetes-engine-76d9d4d2a5b3
   - https://zesty.co/blog/moving-from-docker-to-containerd/
 
