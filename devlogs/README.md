@@ -31,7 +31,7 @@
   - Tested the application on GKE
 
   
-## Next Steps
+# Next Steps
   - Learn python flask
   - Download and learn github copilot
   - Keep building github profile
@@ -39,7 +39,7 @@
   - https://blog.devops.dev/deploy-a-docker-image-from-the-docker-hub-in-gke-google-kubernetes-engine-76d9d4d2a5b3
   - https://zesty.co/blog/moving-from-docker-to-containerd/
 
-## Links
+# Links
 [1] 
 [Getting started with Visual Studio Code](https://code.visualstudio.com/docs/introvideos/basics)
 

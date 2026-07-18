@@ -1,13 +1,1 @@
-### A collection of everything I learned when it comes to coding.
-
-## Bash
-
-## HTML
-
-## Javascript
-
-## Powershell
-
-## Python
-
-## SQL
+This folder is for all of my coding projects

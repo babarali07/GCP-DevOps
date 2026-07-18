@@ -1,0 +1,1 @@
+This folder is for my gcp projects using complete CI/CD pipeline (Terraform, Github Actions)

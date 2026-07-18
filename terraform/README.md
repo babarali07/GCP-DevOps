@@ -1,0 +1,1 @@
+This folder is for all my terraform projects using major cloud providers (GCP, AWS, Azure)
