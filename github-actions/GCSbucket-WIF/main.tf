@@ -20,5 +20,3 @@ resource "google_storage_bucket" "my-bucket" {
   # This prevents accidental public access to bucket contents
   public_access_prevention = "enforced"
 }
-
-#test
