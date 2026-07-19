@@ -1,0 +1,62 @@
+
+Workload Identity Federation Setup Guide
+
+1. Create a Workload Identity Pool
+   - Open Google Cloud Console
+   - Go to IAM & Admin > Workload Identity Federation
+   - Create a new pool
+   - Name it, for example: github-actions-pool
+
+2. Create an OIDC Provider
+   - Inside the pool, create a provider for GitHub Actions
+   - Choose OIDC as the provider type
+   - Set issuer URL to https://token.actions.githubusercontent.com
+   - Set audience to sts.amazonaws.com or use the default GitHub audience if required by your setup
+
+3. Create a Service Account
+   - In IAM & Admin > Service Accounts, create a service account
+   - Grant it the required roles for your Terraform project
+   - Examples: roles/storage.admin, roles/iam.serviceAccountTokenCreator
+
+4. Bind the Service Account to the Provider
+   - In the service account permissions, add the workload identity provider as a principal
+   - Grant it the role Service Account Token Creator
+   - This allows GitHub Actions to impersonate the service account
+
+5. Add GitHub Repository Information
+   - Configure the provider to trust your repository and branch
+   - Example: repository: babarali07/GCP-DevOps
+   - Example: ref: refs/heads/main
+
+6. Add GitHub Secrets
+   - In GitHub repository settings, add these secrets:
+     - WIF_PROVIDER
+     - GCP_SERVICE_ACCOUNT
+
+7. Update the GitHub Actions Workflow
+   - Add permissions:
+     - contents: read
+     - id-token: write
+   - Use google-github-actions/auth@v2
+   - Use google-github-actions/setup-gcloud@v2
+   - Remove the old GOOGLE_CREDENTIALS secret usage
+
+8. Example Workflow Snippet
+   - permissions:
+       contents: read
+       id-token: write
+   - uses: google-github-actions/auth@v2
+     with:
+       workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+       service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+9. Verify the Setup
+   - Run the workflow manually
+   - Confirm Terraform can authenticate successfully
+   - Validate that resources can be created or destroyed as expected
+
+10. Security Notes
+   - Avoid storing service-account JSON keys in GitHub secrets
+   - Prefer short-lived tokens from Workload Identity Federation
+   - Restrict roles to the minimum required
+
