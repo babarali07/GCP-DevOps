@@ -1,0 +1,92 @@
+################################################################################
+# Terraform Destroy Workflow
+# This workflow manually destroys GCP infrastructure managed by Terraform.
+#
+# Trigger: Manual via GitHub Actions workflow_dispatch
+# Purpose: Safely tear down infrastructure with confirmation prompt
+# Security: Requires explicit YES confirmation to prevent accidental destruction
+################################################################################
+
+name: Terraform Destroy
+
+# Workflow trigger configuration
+# workflow_dispatch: Allows manual execution from GitHub UI (no automatic triggers)
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type YES to confirm destructive run'  # Safety check prompt
+        required: true
+        default: 'NO'  # Default to NO to prevent accidental destruction
+
+################################################################################
+# Jobs Definition
+################################################################################
+
+jobs:
+  destroy:
+    name: Destroy Infrastructure (manual)
+    runs-on: ubuntu-latest  # Use latest Ubuntu runner
+    environment: production  # Reference production environment for secrets
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+
+    # Use Bash shell for all steps
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Step 1: Check out the repository code
+      # This clones the repo to access Terraform files
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: Install and configure Terraform CLI
+      # Authenticate Terraform Cloud with API token from GitHub Secrets
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Step 3: Create terraform.tfvars file from GitHub Secrets
+      # This step generates the terraform.tfvars file with sensitive values stored in GitHub Secrets
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          project_id = "${{ secrets.GCP_PROJECT_ID }}"
+          bucket_name = "${{ secrets.GCS_BUCKET_NAME }}"
+          EOF
+        working-directory: github-actions/GCSbucket
+
+      # Format terraform.tfvars file
+      # Ensures the generated terraform.tfvars file adheres to Terraform formatting standards because it is not on the working directory and is generated dynamically.
+      - name: Format terraform.tfvars
+        run: terraform fmt terraform.tfvars
+        working-directory: github-actions/GCSbucket
+
+      # Step 4: Initialize Terraform working directory
+      # Downloads required providers and modules for GCP
+      - name: Init
+        run: terraform init
+        working-directory: github-actions/GCSbucket
+
+      # Step 5: Generate destroy plan
+      # Creates a plan showing what resources will be destroyed (without applying)
+      - name: Plan Destroy
+        run: terraform plan -destroy -out=destroy.tfplan
+        working-directory: github-actions/GCSbucket
+
+      # Step 6: Display the destroy plan
+      # Shows the plan output for manual review before destruction
+      - name: Show Destroy Plan
+        run: terraform show -no-color destroy.tfplan
+        working-directory: github-actions/GCSbucket
+
+      # Step 7: Execute the destroy plan
+      # Only runs if user explicitly entered YES in the confirmation prompt
+      # This step actually destroys all infrastructure
+      - name: Apply Destroy
+        if: ${{ github.event.inputs.confirm == 'YES' }}  # Safety gate - only if confirmed
+        run: terraform apply -input=false destroy.tfplan
+        working-directory: github-actions/GCSbucket
