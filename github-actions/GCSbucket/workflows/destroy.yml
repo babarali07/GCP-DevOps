@@ -23,15 +23,13 @@ on:
 # Jobs Definition
 ################################################################################
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   destroy:
     name: Destroy Infrastructure (manual)
     runs-on: ubuntu-latest  # Use latest Ubuntu runner
     environment: production  # Reference production environment for secrets
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Use Bash shell for all steps
     defaults:
@@ -44,14 +42,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step 2: Authenticate to Google Cloud using Workload Identity Federation
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
-      # Step 3: Install and configure Terraform CLI
+      # Step 2: Install and configure Terraform CLI
       # Authenticate Terraform Cloud with API token from GitHub Secrets
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
