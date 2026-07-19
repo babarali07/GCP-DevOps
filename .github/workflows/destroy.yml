@@ -91,6 +91,7 @@ jobs:
         run: terraform apply -input=false destroy.tfplan
         working-directory: github-actions/GCSbucket
 
+      # Fail immediately when the confirmation input is not exactly YES
       - name: Fail if confirmation is not YES
         if: ${{ github.event.inputs.confirm != 'YES' }}
         run: |
