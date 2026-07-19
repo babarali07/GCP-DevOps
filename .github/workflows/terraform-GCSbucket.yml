@@ -48,7 +48,6 @@ on:
   push:
     branches: [development]
     paths:
-      - '.github/workflows/terraform-GCSbucket.yml'
       - 'github-actions/GCSbucket/**'
 
 permissions:
