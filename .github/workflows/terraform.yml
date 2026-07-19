@@ -48,7 +48,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'tf-ga-demo/**'
+      - 'github-actions/GCSbucket/**'
 
 permissions:
   contents: read
