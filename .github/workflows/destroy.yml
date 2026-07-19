@@ -55,19 +55,19 @@ jobs:
           project_id = "${{ secrets.GCP_PROJECT_ID }}"
           bucket_name = "${{ secrets.GCS_BUCKET_NAME }}"
           EOF
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
 
       # Format terraform.tfvars file
       # Ensures the generated terraform.tfvars file adheres to Terraform formatting standards because it is not on the working directory and is generated dynamically.
       - name: Format terraform.tfvars
         run: terraform fmt terraform.tfvars
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
 
       # Step 4: Initialize Terraform working directory
       # Downloads required providers and modules for GCP
       - name: Init
         run: terraform init
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}  # GCP service account credentials
 
@@ -75,7 +75,7 @@ jobs:
       # Creates a plan showing what resources will be destroyed (without applying)
       - name: Plan Destroy
         run: terraform plan -destroy -out=destroy.tfplan
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
@@ -83,7 +83,7 @@ jobs:
       # Shows the plan output for manual review before destruction
       - name: Show Destroy Plan
         run: terraform show -no-color destroy.tfplan
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
 
       # Step 7: Execute the destroy plan
       # Only runs if user explicitly entered YES in the confirmation prompt
@@ -91,6 +91,6 @@ jobs:
       - name: Apply Destroy
         if: ${{ github.event.inputs.confirm == 'YES' }}  # Safety gate - only if confirmed
         run: terraform apply -input=false destroy.tfplan
-        working-directory: tf-ga-demo
+        working-directory: github-actions/GCSbucket
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}

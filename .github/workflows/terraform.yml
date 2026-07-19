@@ -83,32 +83,32 @@ jobs:
         project_id = "${{ secrets.GCP_PROJECT_ID }}"
         bucket_name = "${{ secrets.GCS_BUCKET_NAME }}"
         EOF
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
 
     # Format terraform.tfvars file
     # Ensures the generated terraform.tfvars file adheres to Terraform formatting standards because it is not on the working directory and is generated dynamically.
     - name: Format terraform.tfvars
       run: terraform fmt terraform.tfvars
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, and installing plugins
     - name: Terraform Init
       run: terraform init
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
@@ -117,6 +117,6 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push' #this step will execute only for push events to main (it won't run for PRs, pushes to other branches, tags, or other event types)
       run: terraform apply -auto-approve -input=false
-      working-directory: tf-ga-demo
+      working-directory: github-actions/GCSbucket
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
