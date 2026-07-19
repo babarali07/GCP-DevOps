@@ -1,7 +1,7 @@
 ################################################################################
 # Terraform Destroy Workflow
 # This workflow manually destroys GCP infrastructure managed by Terraform.
-# 
+#
 # Trigger: Manual via GitHub Actions workflow_dispatch
 # Purpose: Safely tear down infrastructure with confirmation prompt
 # Security: Requires explicit YES confirmation to prevent accidental destruction
@@ -30,7 +30,7 @@ jobs:
     environment: production  # Reference production environment for secrets
     env:
       GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-    
+
     # Use Bash shell for all steps
     defaults:
       run:
@@ -90,3 +90,11 @@ jobs:
         if: ${{ github.event.inputs.confirm == 'YES' }}  # Safety gate - only if confirmed
         run: terraform apply -input=false destroy.tfplan
         working-directory: github-actions/GCSbucket
+
+      # Fail immediately when the confirmation input is not exactly YES
+      - name: Fail if confirmation is not YES
+        if: ${{ github.event.inputs.confirm != 'YES' }}
+        run: |
+          echo "Confirmation input was '${{ github.event.inputs.confirm }}'."
+          echo "Destroy workflow failed because confirmation must be exactly YES."
+          exit 1
