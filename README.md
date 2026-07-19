@@ -4,6 +4,8 @@ This repository contains notes, experiments, and small projects related to Googl
 
 ## Repository Structure
 
+- [.github/](.github/) - GitHub configuration and workflow definitions
+  - [.github/workflows/](.github/workflows/) - GitHub Actions workflow files for Terraform and GCS bucket examples
 - [devlogs/](devlogs/) - Development logs and notes from my DevOps journey
   - [devlogs/README.md](devlogs/README.md) - Overview of the development logs
 - [gcp-projects/](gcp-projects/) - Google Cloud projects and related implementations
@@ -21,6 +23,7 @@ This repository contains notes, experiments, and small projects related to Googl
   - [random-files/README.md](random-files/README.md) - Overview of the random files folder
 - [terraform/](terraform/) - Terraform projects and infrastructure-as-code examples
   - [terraform/README.md](terraform/README.md) - Terraform overview
+  - [terraform/terraform-gcp/](terraform/terraform-gcp/) - Google Cloud Terraform examples
 - [LICENSE](LICENSE) - Repository license
 - [GCP-DevOps.code-workspace](GCP-DevOps.code-workspace) - VS Code workspace configuration (ignored by Git)
 

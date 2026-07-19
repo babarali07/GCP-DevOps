@@ -9,6 +9,8 @@
 ## Development Branch
 - Created `development` branch for ongoing feature development and experimentation.
 - Currently working on GCSbucket-WIF (Workload Identity Federation) implementation in `github-actions/GCSbucket-WIF/`.
+- Configured GitHub Actions to authenticate to Google Cloud using Workload Identity Federation (WIF) with repository secrets for the workload identity provider and service account, replacing the earlier service account key approach.
+- Documented the WIF setup reference for GitHub Actions authentication [3]
 - Development branch used for testing new configurations before merging to main.
 
 # Next Steps
@@ -20,3 +22,4 @@
 # Links
 [1] https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
 [2] https://cloud.google.com/iam/docs/workload-identities
+[3] https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions 
