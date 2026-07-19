@@ -1,6 +1,8 @@
 ################################################################################
 # Terraform Destroy Workflow
 # This workflow manually destroys GCP infrastructure managed by Terraform.
+# Authentication to Google Cloud is handled through Workload Identity Federation (WIF)
+# using GitHub OIDC and the repository secrets WIF_PROVIDER and GCP_SERVICE_ACCOUNT.
 #
 # Trigger: Manual via GitHub Actions workflow_dispatch
 # Purpose: Safely tear down infrastructure with confirmation prompt
@@ -25,7 +27,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write  # Required for GitHub OIDC token exchange with Workload Identity Federation
 
 jobs:
   destroy:
@@ -44,7 +46,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step 2: Authenticate to Google Cloud using Workload Identity Federation
+      # Step 2: Authenticate to Google Cloud using Workload Identity Federation (WIF)
+      # This exchanges the GitHub OIDC token for short-lived GCP credentials.
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -52,7 +55,7 @@ jobs:
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       # Step 3: Install and configure Terraform CLI
-      # Authenticate Terraform Cloud with API token from GitHub Secrets
+      # Terraform Cloud credentials are still supplied via GitHub Secrets when required by the backend.
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:

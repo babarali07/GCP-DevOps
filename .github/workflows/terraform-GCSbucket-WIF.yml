@@ -1,7 +1,8 @@
-# This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
-# with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
-# `terraform init`, `terraform fmt`, and `terraform plan` (speculative plan via Terraform Cloud). On push events
-# to the "development" branch, `terraform apply` will be executed.
+# This workflow applies Terraform configuration for the GCSbucket WIF setup.
+# Google Cloud authentication is performed through Workload Identity Federation (WIF)
+# using GitHub OIDC and the repository secrets WIF_PROVIDER and GCP_SERVICE_ACCOUNT.
+# Terraform CLI is configured for the workflow, and a Terraform Cloud API token may still be used
+# when the backend requires it.
 #
 # Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
 #
@@ -42,7 +43,7 @@
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-name: 'Terraform GCSbucket'
+name: 'Terraform GCSbucket with WIF'
 
 on:
   push:
@@ -52,11 +53,11 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write  # Required for GitHub OIDC token exchange with Workload Identity Federation
 
 jobs:
   terraform:
-    name: 'Terraform GCSbucket'
+    name: 'Terraform GCSbucket with WIF'
     runs-on: ubuntu-latest
     environment: production
 
@@ -70,14 +71,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # Authenticate to Google Cloud using Workload Identity Federation
+    # Authenticate to Google Cloud using Workload Identity Federation (WIF)
+    # This exchanges the GitHub OIDC token for short-lived GCP credentials.
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file
+    # when a Terraform Cloud API token is needed by the backend.
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
@@ -91,32 +94,32 @@ jobs:
         project_id = "${{ secrets.GCP_PROJECT_ID }}"
         bucket_name = "${{ secrets.GCS_BUCKET_NAME }}"
         EOF
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF
 
     # Format terraform.tfvars file
     # Ensures the generated terraform.tfvars file adheres to Terraform formatting standards because it is not on the working directory and is generated dynamically.
     - name: Format terraform.tfvars
       run: terraform fmt terraform.tfvars
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF   
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, and installing plugins
     - name: Terraform Init
       run: terraform init
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF 
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF
 
       # On push to "development", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       if: github.ref == 'refs/heads/development' && github.event_name == 'push' #this step will execute only for push events to development (it won't run for PRs, pushes to other branches, tags, or other event types)
       run: terraform apply -auto-approve -input=false
-      working-directory: github-actions/GCSbucket
+      working-directory: github-actions/GCSbucket-WIF
