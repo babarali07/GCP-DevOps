@@ -58,6 +58,8 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -95,22 +97,16 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: github-actions/GCSbucket
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
       working-directory: github-actions/GCSbucket
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
       working-directory: github-actions/GCSbucket
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
@@ -118,5 +114,3 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push' #this step will execute only for push events to main (it won't run for PRs, pushes to other branches, tags, or other event types)
       run: terraform apply -auto-approve -input=false
       working-directory: github-actions/GCSbucket
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}

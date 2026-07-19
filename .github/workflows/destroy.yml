@@ -28,6 +28,8 @@ jobs:
     name: Destroy Infrastructure (manual)
     runs-on: ubuntu-latest  # Use latest Ubuntu runner
     environment: production  # Reference production environment for secrets
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
     
     # Use Bash shell for all steps
     defaults:
@@ -68,16 +70,12 @@ jobs:
       - name: Init
         run: terraform init
         working-directory: github-actions/GCSbucket
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}  # GCP service account credentials
 
       # Step 5: Generate destroy plan
       # Creates a plan showing what resources will be destroyed (without applying)
       - name: Plan Destroy
         run: terraform plan -destroy -out=destroy.tfplan
         working-directory: github-actions/GCSbucket
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
       # Step 6: Display the destroy plan
       # Shows the plan output for manual review before destruction
@@ -92,5 +90,3 @@ jobs:
         if: ${{ github.event.inputs.confirm == 'YES' }}  # Safety gate - only if confirmed
         run: terraform apply -input=false destroy.tfplan
         working-directory: github-actions/GCSbucket
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
