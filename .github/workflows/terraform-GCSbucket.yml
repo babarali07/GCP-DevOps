@@ -46,7 +46,7 @@ name: 'Terraform'
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "development" ]
     paths:
       - 'github-actions/GCSbucket/**'
 
@@ -108,9 +108,9 @@ jobs:
       run: terraform plan -input=false
       working-directory: github-actions/GCSbucket
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
+      # On push to "development", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push' #this step will execute only for push events to main (it won't run for PRs, pushes to other branches, tags, or other event types)
+      if: github.ref == 'refs/heads/development' && github.event_name == 'push' #this step will execute only for push events to development (it won't run for PRs, pushes to other branches, tags, or other event types)
       run: terraform apply -auto-approve -input=false
       working-directory: github-actions/GCSbucket
