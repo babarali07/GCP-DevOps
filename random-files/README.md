@@ -1,1 +1,1 @@
-This folder is for random files
+This folder is for miscellaneous files, experiments, and small notes that do not yet belong to a dedicated project folder.
