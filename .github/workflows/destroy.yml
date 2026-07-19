@@ -90,3 +90,10 @@ jobs:
         if: ${{ github.event.inputs.confirm == 'YES' }}  # Safety gate - only if confirmed
         run: terraform apply -input=false destroy.tfplan
         working-directory: github-actions/GCSbucket
+
+      - name: Fail if confirmation is not YES
+        if: ${{ github.event.inputs.confirm != 'YES' }}
+        run: |
+          echo "Confirmation input was '${{ github.event.inputs.confirm }}'."
+          echo "Destroy workflow failed because confirmation must be exactly YES."
+          exit 1
