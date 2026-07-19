@@ -22,6 +22,6 @@
 - Keep refining the repository structure as new examples are added.
 
 # Links
-[1] https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
-[2] https://cloud.google.com/iam/docs/workload-identities
+[1] https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket 
+[2] https://cloud.google.com/iam/docs/workload-identities 
 [3] https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions 
