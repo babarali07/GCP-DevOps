@@ -55,7 +55,7 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Terraform GCSbucket'
     runs-on: ubuntu-latest
     environment: production
     env:
