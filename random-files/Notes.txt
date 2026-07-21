@@ -1,0 +1,5 @@
+- For service account impersination give the Service Account Token creater permission to the SA and the User account who is impersination the SA
+
+- WIF attribute for GitHub Actions setup: google.subject=assertion.sub, attribute.actor=assertion.actor, attribute.aud=assertion.aud, attribute.repository=assertion.repository
+- WIF condition: assertion.repository == 'babarali07/GCP-DevOps'
+
