@@ -8,8 +8,7 @@ on:
       - 'github-actions/Docker/**'
 
 jobs:
-
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -18,13 +17,11 @@ jobs:
         docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/gcp-devops:latest
       working-directory: github-actions/Docker
 
-  publish-image:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
+    - name: Log in to Docker Hub
+      run: |
+        echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login --username "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
     - name: Push Docker image
       run: |
-        docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/gcp-devops:latest
       working-directory: github-actions/Docker
