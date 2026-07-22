@@ -3,16 +3,28 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths: 
+      - 'Dockerfile'
+      - 'github-actions/Docker/**'
 
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: 
+        docker build . --file Dockerfile --tag hello-world-python-app:$(date +%s)
+      working-directory: github-actions/Docker
+
+  publish-image:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Push Docker image
+      run:
+        docker tag hello-world-python-app:$(date +%s) gcr.io/${{ secrets.GCP_PROJECT_ID }}/hello-world-python-app:$(date +%s)
+        docker push gcr.io/${{ secrets.DOCKER_HUB_TOKEN }}/hello-world-python-app:$(date +%s)
+      working-directory: github-actions/Docker
