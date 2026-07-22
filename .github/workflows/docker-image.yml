@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: 
-        docker build . --file Dockerfile --t babarali07/gcp-devops:$latest
+        docker build . --file Dockerfile -t babarali07/gcp-devops:$latest
       working-directory: github-actions/Docker
 
   publish-image:
