@@ -4,6 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths: 
+      - '.github/workflows/docker-image.yml'
       - 'github-actions/Docker/**'
 
 jobs:
@@ -24,6 +25,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Push Docker image
       run:
-        docker login -u babarali07 -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        docker push babarali07/gcp-devops:hello-world-python-app:$(date +%s)
+        
+        docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push babarali07/gcp-devops:latest
       working-directory: github-actions/Docker
