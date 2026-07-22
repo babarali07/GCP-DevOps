@@ -25,5 +25,5 @@ jobs:
     - name: Push Docker image
       run:
         docker login -u babarali07 -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        docker push babarali07/gcp-devops/hello-world-python-app:latest
+        docker push babarali07/gcp-devops:hello-world-python-app:$(date +%s)
       working-directory: github-actions/Docker
