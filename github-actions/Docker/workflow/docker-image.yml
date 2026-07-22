@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: 
+      run: |
         docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/gcp-devops:latest
       working-directory: github-actions/Docker
 
@@ -24,4 +24,3 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/gcp-devops:latest
-      working-directory: github-actions/Docker
